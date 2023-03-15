@@ -25,49 +25,32 @@ const passwordReducer = (state, action) => {
 }
 
 const Login = (props) => {
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState('');
-  // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
   
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: null});
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: null});
 
-  // useEffect(() => {
-  //   console.log('EFFECT RUNNING');
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;  //This is object destructuring, and applying an alias.
 
-  //   return () => {
-  //     console.log('EFFECT CLEANUP')
-  //   };
-  // }, []);
-
-  // useEffect(() =>{
-  //   //useEffect is here to handle SIDE effects. Any time an action that should be triggered in response to another action, that is a side effect.
-  //   const id = setTimeout(() => {
-  //     setFormIsValid(
-  //     enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //   );
-  //   }, 500);
-  //   return () => {
-  //     clearTimeout(id);  //This clears the previous timer. Only the last timer will finish -- this is effectively a debounce.
-  //   };  //This is a "clean-up" function. It runs before the next iteration of useEffect runs and before the component is removed.
-  // }, [enteredEmail, enteredPassword]); //This will trigger the validation code whenever one of these two variables change.
+  useEffect(() =>{
+    //useEffect is here to handle SIDE effects. Any time an action that should be triggered in response to another action, that is a side effect.
+    const id = setTimeout(() => {
+      setFormIsValid(
+      emailIsValid && passwordIsValid  //This is now okay because useEffect runs AFTER the component finishes it's state updates.
+    );
+    }, 500);
+    return () => {
+      clearTimeout(id);  //This clears the previous timer. Only the last timer will finish -- this is effectively a debounce.
+    };  //This is a "clean-up" function. It runs before the next iteration of useEffect runs and before the component is removed.
+  }, [emailIsValid, passwordIsValid]); //This will trigger the validation code whenever one of these two variables change.
 
   const emailChangeHandler = (event) => {
     dispatchEmail({type: 'USER_INPUT', val: event.target.value});
-
-    setFormIsValid(
-      event.target.value.includes('@') && passwordState.value.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({type: 'USER_INPUT', val: event.target.value});
-
-    setFormIsValid(
-      emailState.isValid && event.target.value.trim().length > 6
-    );
   };
 
   const validateEmailHandler = () => {
