@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
+import AuthContext from '../../store/auth-context';
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
@@ -24,7 +25,7 @@ const passwordReducer = (state, action) => {
   return {value: '', isValid: null};
 }
 
-const Login = (props) => {
+const Login = () => {
   const [formIsValid, setFormIsValid] = useState(false);
   
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: null});
@@ -32,6 +33,9 @@ const Login = (props) => {
 
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;  //This is object destructuring, and applying an alias.
+
+  const ctx = useContext(AuthContext);
+
 
   useEffect(() =>{
     //useEffect is here to handle SIDE effects. Any time an action that should be triggered in response to another action, that is a side effect.
@@ -63,7 +67,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    ctx.onLogIn(emailState.value, passwordState.value);
   };
 
   return (
