@@ -1,35 +1,46 @@
-import { useState, useRef } from 'react';
+
+import useInput from '../hooks/use-input';
 
 const SimpleInput = (props) => {
-  const nameInputRef = useRef();
-  const [enteredName, setEnteredName] = useState('');
+  const {
+    value: enteredName,
+    isValid: enteredNameIsValid,
+    hasError: nameHasError,
+    valueChangeHandler: nameChangedHandler,
+    inputBlurHandler: nameBlurHandler,
+    reset: resetNameInput,
+  } = useInput((value) => value.trim() !== '');
 
-  const nameInputChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-  };
+  const formIsValid = enteredNameIsValid ? true : false;
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    console.log(enteredName);
-    console.log('ref value', nameInputRef.current.value); //Refs are best for values you only need once. If you're doing keystroke validation, then the state is better because you can do two way binding (and other reasons).
-    setEnteredName('');
+    if (!nameHasError) {
+      return;
+    }
+    resetNameInput();
   };
+
+  const nameInputClasses = nameHasError
+    ? 'form-control invalid'
+    : 'form-control';
 
   return (
     <form onSubmit={formSubmissionHandler}>
-      <div className='form-control'>
+      <div className={nameInputClasses}>
         <label htmlFor='name'>Your Name</label>
         <input
-          ref={nameInputRef}
           type='text'
           id='name'
-          onChange={nameInputChangeHandler}
+          onChange={nameChangedHandler}
           value={enteredName}
+          onBlur={nameBlurHandler}
         />
+        {nameHasError && <p className='error-text'>Name must not be empty.</p>}
       </div>
       <div className='form-actions'>
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
