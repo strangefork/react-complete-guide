@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'; //the 'connect' component is used primarily for connection class-based components to redux.
 
-import { counterActions } from '../store/index';
+import { counterActions } from '../store/counter';
 import classes from './Counter.module.css';
 
 const Counter = () => {
