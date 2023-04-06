@@ -18,6 +18,7 @@ const ProductItem = (props) => {
       })
     );
   };
+  
   return (
     <li className={classes.item}>
       <Card>
