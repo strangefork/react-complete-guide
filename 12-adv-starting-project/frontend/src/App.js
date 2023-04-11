@@ -23,24 +23,30 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import RootLayout from './components/RootLayout';
-import EventsPage from './pages/Events';
+import EventsPage, { loader as eventsLoader } from './pages/Events';
 import EventDetailPage from './pages/EventDetail';
 import NewEventPage from './pages/NewEvent';
 import EditEventPage from './pages/EditEvent';
 import HomePage from './pages/Home';
 import EventNavigation from './components/EventNavigation';
+import ErrorPage from './pages/Error';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       {
         path: 'events',
         element: <EventNavigation />,
         children: [
-          { index: true, element: <EventsPage /> },
+          {
+            index: true,
+            element: <EventsPage />,
+            loader: eventsLoader, //React router will wait for the loader to return data before sending the user to the page.
+          },
           { path: ':id', element: <EventDetailPage /> },
           { path: 'new', element: <NewEventPage /> },
           { path: ':id/edit', element: <EditEventPage /> },

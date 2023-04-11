@@ -1,28 +1,32 @@
-import { NavLink } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
-const DUMMY_EVENTS = [
-  { id: 'e1', title: 'Neil Gaiman Book Signing' },
-  { id: 'e2', title: 'Bungie Recruiting Drive' },
-  { id: 'e3', title: 'Tabletop Games Convention' },
-];
+import EventsList from '../components/EventsList';
 
 function EventsPage() {
+  const data = useLoaderData(); //React Router will check if a Promise is returned, and get that data for you. No need to decode the Promise.
+  // if (data.isError) {
+  //   return <p>{data.message}</p>;
+  // }
+  const events = data.events;
   return (
     <>
-      <main>
-        <h1>Events Page</h1>
-        <ul>
-          {DUMMY_EVENTS.map((event) => (
-            <li>
-              <NavLink key={event.id} to={event.id}>
-                {event.title}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </main>
+      <EventsList events={events} />
     </>
   );
 }
 
 export default EventsPage;
+
+export async function loader() {
+  //You can access browser functions here! But you can't use React Hooks.
+  const response = await fetch('http://localhost:8080/events');
+
+  if (!response.ok) {
+    // return { isError: true, message: 'Could not fetch events' };
+    throw new Response(JSON.stringify({ message: 'Could not fetch events.' }), {
+      status: 500,
+    });
+  } else {
+    return response; //React will extract this for you when you call useLoaderData;
+  }
+}
