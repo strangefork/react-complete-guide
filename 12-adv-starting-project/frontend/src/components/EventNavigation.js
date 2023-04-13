@@ -5,7 +5,6 @@ import EventsNavigation from './EventsNavigation';
 function EventNavigation() {
   return (
     <>
-      <EventsNavigation />
       <Outlet />
     </>
   );
