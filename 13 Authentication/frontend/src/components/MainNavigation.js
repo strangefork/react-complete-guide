@@ -38,11 +38,11 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to='/auth?mode=login'
+              to='/auth'
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }>
-              Log In
+              Authentication
             </NavLink>
           </li>
         </ul>
