@@ -1,12 +1,1 @@
-{
-  "events": [
-    {
-      "title": "A new event",
-      "image": "https://cdn.muenchen-p.de/fl_progressive,q_65/.imaging/stk/responsive/teaser300/dms/va-2016/muenchner-christkindlmarkt/christkindlmarkt-marienplat-logo-hp/document/christkindlmarkt-marienplat-logo-hp.jpg",
-      "date": "2022-10-01",
-      "description": "Some awesome event!",
-      "id": "2a42fcc4-ea21-4bdd-abf6-c40006dc66a9"
-    }
-  ],
-  "users": []
-}
+{"events":[{"title":"The Protomen @ Reggie's","image":"https://photos.bandsintown.com/large/6240146.jpeg","date":"2023-04-06","description":"Hell yeah","id":"b3badc44-b0ec-4894-95cc-363ffaf326ec"},{"title":"The Protomen and the Cybertronic Spree","image":"https://urbanmatter.com/chicago/wp-content/uploads/2017/12/Reggies-image.png","date":"2023-04-05","description":"One hell of a show!!","id":"ed06e639-ffe6-415c-b0b0-f8aee154beb3"}],"users":[{"email":"test@test.com","password":"$2a$12$0bNeV0op/F4x9OfV6AbxkeJNEsXEU7/rk/ztF9/8odqP5vOGlF77G","id":"8ea1ed62-9875-41f2-9be0-aef8cf46a7c3"},{"email":"fake@fake.com","password":"$2a$12$4IrkXAH2npkFSNk5f68rfOWnFdHWzjaJ2rYo./yu944Gh2M9gHe9S","id":"019e38e3-368a-4c65-9512-56fa3f2c8366"}]}
