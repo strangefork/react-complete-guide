@@ -7,6 +7,7 @@ function MeetupItem(props) {
   const router = useRouter();
 
   function showDetailsHandler() {
+    console.log('showDetailsId', props.id);
     router.push('/' + props.id); //The equivalent of using the Link component
   }
 
