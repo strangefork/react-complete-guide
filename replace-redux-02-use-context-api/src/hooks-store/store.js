@@ -4,7 +4,7 @@ let globalState = {}; //This is created once! Not recreated when the hook is ins
 let listeners = [];
 let actions = {};
 
-export const useStore = () => {
+export const useStore = (shouldListen = true) => {
   const setState = useState(globalState)[1]; //This is how you pull only the update function.
 
   const dispatch = (actionId, payload) => {
@@ -17,13 +17,17 @@ export const useStore = () => {
   };
 
   useEffect(() => {
-    listeners.push(setState);
+    if (shouldListen) {
+      listeners.push(setState);
+    }
 
     //Clean up listeners when the component unmounts.
     return () => {
-      listeners = listeners.filter((li) => li != setState); //Filter out the setState variable that was added when the component is mounted.
+      if (shouldListen) {
+        listeners = listeners.filter((li) => li !== setState); //Filter out the setState variable that was added when the component is mounted.
+      }
     };
-  }, []);
+  }, [setState, shouldListen]);
 
   return [globalState, dispatch];
 };
